@@ -4,11 +4,21 @@ A stationary stellar system of negligible mass and finite extent is confined by 
 potential  $\Phi(r)=v_c^2\ln{r}+constant$.
 
 \subsection{}
-Prove that the mean-square velocity is $\langle v^2 \rangle = v_c^2$, independent of the shape, radial
-profile, or other properties of the stellar system. Hint: as in the derivation of the virial
+Prove that the mean-square velocity is $\langle v^2 \rangle = v_c^2$, independent of the shape, radial profile, or other properties of the stellar system. Hint: as in the derivation of the virial
 theorem, consider the behavior of $d^2I/dt^2$ where in this case $I=r^2$.
+
+\begin{align*}
+    I &=|r|^2 = \overline{\mathbf{r}\cdot \mathbf{r}}\\
+    \frac{dI}{dt}&= \overline{\mathbf{r}\Dot{\mathbf{r}}}+\overline{\mathbf{r}\Dot{\mathbf{r}}}=2\overline{\mathbf{r}\Dot{\mathbf{r}}}\\
+    \frac{d^2I}{dt}&=2(\overline{\mathbf{r}\Ddot{\mathbf{r}}}+\overline{\Dot{\mathbf{r}}\Dot{\mathbf{r}}})=2(\overline{\mathbf{r}\Ddot{\mathbf{r}}}+\overline{\Dot{\mathbf{r}}^2})\\
+    \text{given that }
+    \Ddot{\mathbf{r}}&=-\frac{d\Phi}{dr}=-\frac{d}{dr}\left[v_c^2\ln{r}+constant \right]=-v_c^2/r\\
+    \text{then, } \frac{d^2I}{dt}&=2(-\frac{v_c^2}{r}\mathbf{r}+\overline{v^2})=0\\
+    v_c^2&=\overline{v^2}
+\end{align*}
+
+it is independent of the shape, radial profile or other properties because the constant disappear when we make the derivation of the acceleration.
 
 \subsection{}
 The singular isothermal sphere has the same potential (eq. 4.104), but in this system
-the mean-square velocity is $\langle v^2\rangle = 3\sigma^2 = \frac{3}{2}v_c^2$. How is this consistent with the result of
-part (a)?
+the mean-square velocity is $\langle v^2\rangle = 3\sigma^2 = \frac{3}{2}v_c^2$. How is this consistent with the result of part (a)?

@@ -7,74 +7,119 @@ where
 \begin{equation}
     W(r)\equiv\frac{V(r_t)-V(r)}{\sigma^2}
 \end{equation}
-Recall that the profile shape only depends on Wo ≡ W(0). Given the
+Recall that the profile shape only depends on $W_0 \equiv W(0)$. Given the
 profile, the overall linear size and mass of the profile can be scaled as
 desired to any set of units
-\subsection{}
-Note that Poisson’s equation is a second order ordinary differential
-equation just like Newton’s equations and therefore can be written as two coupled first order differential equations. Rewrite the
-Poisson equation as a system of first order ODEs with “physical
-boundary conditions” (that is: $V(0) = $ constant, $dV(0)/dr = 0$) in
-spherical coordinates.
 
 \subsection{}
-Integrate (numerically) Poisson’s equation for the King model. By
-adjusting $W_o\equiv W(0)$, one gets models with different concentration; you can check against the table below. Plot up the density and the potential just to see what they look like. You will
-use these later on to generate initial conditions for a simulation.
-Check your procedure by computing the values in each of the
-four columns. The core radius of the King model is defined as
+% Note that Poisson’s equation is a second order ordinary differential
+% equation just like Newton’s equations and therefore can be written as two coupled first order differential equations. Rewrite the
+% Poisson equation as a system of first order ODEs with “physical
+% boundary conditions” (that is: $V(0) = $ constant, $dV(0)/dr = 0$) in
+% spherical coordinates.
+
+Poisson's equation is given by
+\begin{equation}
+    \nabla^2\psi=-4\pi G\rho.
+\end{equation}
+We can rewrite it into a system of of two first order differential equations in spherical coordinates, by first using the chain rule to expand the left term:
+\begin{align*}
+    \frac{1}{r^2}\frac{d}{dr}\left(r^2\frac{d\psi}{dr}\right)=-4\pi G \rho\\
+    \frac{1}{r^2}\left(r^2\frac{d^2\psi}{dr^2}+\frac{d}{dr}(r^2)\frac{d\psi}{dr}\right)=-4\pi G\rho\\
+    \frac{d^2\psi}{dr^2}+\frac{1}{r^2}2r\frac{d\psi}{dr}=-4\pi G\rho\\
+    \frac{d^2\psi}{dr^2}+\frac{2}{r}\frac{d\psi}{dr}=-4\pi G\rho.\\
+\end{align*}
+
+Then we substitute $y=d\psi/dr$ and rearrange it into
+\begin{align*}
+    \frac{dy}{dr}+\frac{2y}{r}=-4\pi G\rho\\
+    \frac{dy}{dr}=-4\pi G\rho-\frac{2y}{r}.
+\end{align*}
+
+This give us our two differential equations:
+\begin{align}
+    y&=\frac{d\psi}{dr}
+    \label{eq:vpoisson}\\
+    \frac{dy}{dr}&=-4\pi G\rho-\frac{2y}{r}
+    \label{eq:apoisson}
+\end{align}
+where $\rho=\rho_K(\psi)$
+\begin{equation}
+    \begin{split}
+        \rho_K(\psi)=\rho_1\left[ e^{W}erf(\sqrt{W})-\sqrt{\frac{4W}{\pi}}\left(1+\frac{2W}{3}\right)\right],
+    \end{split}
+\end{equation}
+and $W=\psi/\sigma^2$ and $\rho_1=$constant.
+
+
+\subsection{}
+
+Using our 4th order Runge-Kutta we can integrate numerically equations \ref{eq:vpoisson} and \ref{eq:apoisson}.
+
+Using the initial conditions $\Psi(0) = W_0\sigma^2 = $ constant and $d\Psi(0)/dr = 0$. $W_0$ is the dimensionless potential and is shown in the first column of table \ref{tab:KingModel}. 
+
+\begin{figure}
+    \centering
+    \includegraphics{}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+The second column is the total energy,
+\begin{equation}
+    E_T=\pi\int\rho\Phi\r^2
+    \label{eq:TotalEnergy}
+\end{equation}
+where 
+\begin{equation}
+    \phi(r) = \phi(r_t)-\Psi(r)
+    \label{eq: Potential}
+\end{equation}
+
+The third column is the concentration,
+\begin{equation}
+    c = \log_10(\frac{r_t}{r_c}
+\end{equation}
+where
 \begin{equation}
     r_c=\sqrt{9\sigma^2/4\pi G \rho_0}.
 \end{equation}
-In these units, the second column describes
-the total energy of the King model, the third column describes the
-concentration, c, the fourth is the the central density in units of
-the mean density and the fifth is the mean square particle radius in
-units of the tidal radius.
 
-\begin{table}[]
-    \centering
-    \include{KingModel.tex}
-    \caption{Caption}
-    \label{tab:my_label}
-\end{table}
+The fourth column is the central density in units of the mean density given by
+\begin{equation}
+    \rho_c = \rho(0)/(3M/(4\pi r_t^3)).
+\end{equation}
 
+The fifth column is the mean square particle radius given by
+\begin{column}
+\langle r^2 \rangle = \frac{\int\rho(\Psi)r^4}{r_t^2 \int\rho(\Psi)r^2}
+\end{column}
+where $r_t$ is the last value of r.
 
-
-
-% % Show that in a frame that rotates with constant angular velocity $\mathbf{\Omega}$,
-% % with $\nabla\mathbf{\Phi}_{eff}\equiv\mathbf{\Phi}-\frac{1}{2}|\mathbf{\Omega}\times\mathbf{x}|^2$, the collisionless Boltzmann equation can
-% % be written:
-% % \begin{equation}
-% %     \frac{\partial f}{\partial t}+\mathbf{v}\cdot\nabla f - \left[2(\mathbf{\Omega}\times\mathbf{v})+\nabla\mathbf{\Phi}_{eff}\right]\cdot\frac{\partial f}{\partial \mathbf{v}}=0
-% % \end{equation}
-% % [Hint: This is B\&T, Problem 4.1 on page 387.]
-
-% The continuity equation is
+% \begin{figure}
+%     \centering
+%     \includegraphics{CodeAndFigures/}
+%     \caption{Caption}
+%     \label{fig:my_label}
+% \end{figure}
+% Integrate (numerically) Poisson’s equation for the King model. By
+% adjusting $W_o\equiv W(0)$, one gets models with different concentration; you can check against the table below.
+% Plot up the density and the potential just to see what they look like. 
+% You will use these later on to generate initial conditions for a simulation.
+% Check your procedure by computing the values in each of the four columns.
+% The core radius of the King model is defined as
 % \begin{equation}
-%     \frac{\partial f}{\partial t} + \frac{\partial}{\partial w}\cdot (f\Dot{w})=0
+%     r_c=\sqrt{9\sigma^2/4\pi G \rho_0}.
 % \end{equation}
-% where we can consider $w=(p,q)$ as any arbitrary system of canonical coordinates \cite{BT2008} and $\Dot{w}\mathrm{is}(\Dot{p},\Dot{q})$. 
- 
-% In a rotating frame, the canonical coordinates are $w=(x,v)$ and $\Dot{w}=(\Dot{x},\Dot{v})$ so the continuity equation is given by
-% \begin{align*}
-%     &\frac{\partial f}{\partial t} + \frac{\partial}{\partial \mathbf{w}}\cdot (f\Dot{\mathbf{w}})=0\\
-%     &\frac{\partial f}{\partial t} + \frac{\partial}{\partial \mathbf{x}}\cdot (f\Dot{\mathbf{x}})+ \frac{\partial}{\partial \mathbf{v}}\cdot (f\Dot{\mathbf{v}})=0\\
-%     &\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \mathbf{x}}\cdot \Dot{\mathbf{x}} +\frac{\partial \dot{\mathbf{x}}}{\partial \mathbf{x}}\cdot f + \frac{\partial f}{\partial \mathbf{v}}\cdot \Dot{\mathbf{v}} + \frac{\partial \Dot{\mathbf{v}}}{\partial \mathbf{v}}\cdot f=0\\
-%     &\frac{\partial f}{\partial t} + \nabla f\cdot\Dot{\mathbf{x}} + \frac{\partial f}{\partial \mathbf{v}}\cdot \Dot{\mathbf{v}}=0.\numberthis{\label{eq:cont}}
-% \end{align*}
-% where 
-% \begin{align*}
-%     \mathbf{v}&=\dot{\mathbf{x}}\\
-%     \dot{\mathbf{v}}&=\Ddot{\mathbf{x}}=-\nabla\mathbf{\Phi} - 2\mathbf{\Omega}\times\dot{\mathbf{x}}-\mathbf{\Omega}\times(\mathbf{\Omega}\times\mathbf{x})\\
-%     &= -\nabla\mathbf{\Phi}_{eff} - 2\mathbf{\Omega}\times\dot{\mathbf{v}}
-% \end{align*}
-
-% Substituting the last equations into the continuity equation \ref{eq:cont} and  we get
-% \begin{align*}
-%     &\frac{\partial f}{\partial t} + \nabla f\cdot \mathbf{v} + \frac{\partial f}{\partial \mathbf{v}}\cdot (-\nabla\Phi_{eff} - 2\mathbf{\Omega}\times\dot{\mathbf{x}}) =0\\
-%     &\frac{\partial f}{\partial t}+\mathbf{v}\cdot\nabla f - \left(2\mathbf{\Omega}\times\mathbf{v}+\nabla\mathbf{\Phi}_{eff}\right)\cdot\frac{\partial f}{\partial \mathbf{v}}=0
-% \end{align*}
+% In these units, the second column describes the total energy of the King model, the third column describes the concentration, c, the fourth is the the central density in units of
+% the mean density and the fifth is the mean square particle radius in
+% units of the tidal radius.
 
 
 
+\begin{table*}
+    \centering
+    \input{CodeAndFigures/KingModelTable.tex}
+    \caption{Table showing from left to right, $W_0$, total energy, concentration, central density, and the mean square particle radius.}
+    \label{tab:KingModel}
+\end{table*}
