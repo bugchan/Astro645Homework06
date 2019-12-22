@@ -1,7 +1,36 @@
 \section{Virial equations with an external field}
+% Show that in the presence of an externally generated gravitational potential $\Phi_{ext}$,
+% the right side of equation (4.247) acquires an extra term:
+% \begin{equation}
+%     V_{jk}=-\frac{1}{2}\int d^3x\left(x_k\frac{\partial\Phi_{ext}}{\partial x_j}+x_j\frac{\partial\Phi_{ext}}{\partial x_k}\right)\rho
+% \end{equation}
 
-Show that in the presence of an externally generated gravitational potential $\Phi_{ext}$,
-the right side of equation (4.247) acquires an extra term:
+The tensor Virial theorem is described by
 \begin{equation}
-    V_{jk}=-\frac{1}{2}\int d^3x\left(x_k\frac{\partial\Phi_{ext}}{\partial x_j}+x_j\frac{\partial\Phi_{ext}}{\partial x_k}\right)\rho
+    \frac{1}{2}\frac{d^2I_{jk}}{dt^2}=2T_{jk}+\Pi_{jk}+W_{jk}
 \end{equation}
+
+where $2T_{jk}+\Pi_{jk}$ is the total kinetic energy and $W_{jk}$ is the total potential energy. But in presence of an external potential, then $\Phi=\Phi_0+\Phi_{ext}$ so that W will now be 
+\begin{align*}
+    -\int d^3x\rho x_j\frac{\partial\Phi}{\partial dx_k}&=-\int d^3x\rho x_j\frac{\partial\Phi_0+\Phi_{ext}}{\partial dx_k}\\
+    &=-\int d^3x\rho x_j\frac{\partial\Phi_0}{\partial dx_k}-\int d^3x\rho x_j\frac{\partial\Phi_{ext}}{\partial dx_k}\\
+    &=W_{jk}+V_{jk},
+\end{align*}
+giving an extra term to the tensor virial theorem:
+\begin{equation}
+    \frac{1}{2}\frac{d^2I_{jk}}{dt^2}=2T_{jk}+\Pi_{jk}+W_{jk}+V_{jk}
+\end{equation}
+
+
+Since $V_{jk}$ is a square matrix, it can be decomposed into a its skew symmetric part and symmetric part using
+\begin{equation}
+    A=\frac{1}{2}(A-A^T)+\frac{1}{2}(A + A^T).
+\end{equation}
+
+Assuming that it is only symmetric, then the extra term is 
+\begin{equation*}
+    V_{jk}=-\frac{1}{2}\int d^3x\rho\left( x_j\frac{\partial\Phi_{ext}}{\partial dx_k}+x_k\frac{\partial\Phi_{ext}}{\partial dx_j}\right)
+\end{equation*}
+
+
+
