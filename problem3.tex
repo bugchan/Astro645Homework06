@@ -1,19 +1,79 @@
 \section{Practice with Maxwellian distributions}
+% For a Maxwellian distribution of velocities with one-dimensional dispersion $\sigma$, show that:
 
-For a Maxwellian distribution of velocities with one-dimensional dispersion $\sigma$,
-show that:
-
-\subsection{}
-the mean speed is $\Bar{v}=(8/\pi)^{1/2}\sigma$
-
-\subsection{}
-the mean-square speed is $\Bar{v^2}=3\sigma^2$
+The Maxwellian distribution is given by
+\begin{equation}
+    f(v) = v^2 e^{-|\Vec{v}|^2/2\sigma^2} d^3\Vec{v}.
+\end{equation}
 
 \subsection{}
-the mean-square of one component of velocity is $\Bar{v^2_x}=\sigma^2$
+% the mean speed is $\Bar{v}=(8/\pi)^{1/2}\sigma$
+The mean speed can be calculate by using the first moment, $\Bar{v}$,
+\begin{equation}
+    \Bar{v}=\frac{\int f(v)v d^3v}{\int f(v) d^3v}
+\end{equation}
+where the denominator is a normalization factor and be found by doing the integral. Since the Maxwellian distribution is the same in every direction we can use that $d^3v = 4\pi v^2 dv$, so that the normalization factor is
+\begin{align*}
+    4\pi\int_0^\infty v^2 e^{v^2/2\sigma^2}dv, & \text{ substituting } u= v/\sqrt{2\sigma} \text{ and } du=dv/\sqrt{2}\sigma,\\
+    &= 4\pi\int_0^\infty 2\sigma^2 u^2 e^{u^2}\sqrt{2}\sigma du\\
+    &= 8\pi \sigma^3 \sqrt{2} \frac{1}{2}\Gamma(\frac{3}{2}) = 2\sqrt{2}\sigma^3 \pi \sqrt{\pi}
+\end{align*}
 
+The numerator can be solved by using the same substitution as in the normalization factor, so that
+\begin{align*}
+    4\pi\int_0^\infty v^3 e^{v^2/2\sigma^2}dv 
+    &= 4\pi\int_0^\infty (\sqrt{2}\sigma u)^3 e^{u^2}\sqrt{2}\sigma du\\
+    &= 16 \pi \sigma^4\frac{1}{2}\Gamma(\frac{4}{2}) = 8\pi\sigma^4.
+\end{align*}
+
+Finally, the mean speed is given by
+\begin{equation}
+    \Bar{v}=\frac{\int f(v)v d^3v}{\int f(v) d^3v} = \frac{8\pi\sigma^4}{2\sqrt{2}\sigma^3 \pi \sqrt{\pi}}= \sqrt{\frac{8}{\pi}}\sigma
+\end{equation}
+
+%==============================================================================
+\subsection{}
+% the mean-square speed is $\Bar{v^2}=3\sigma^2$
+The second moment is the mean-square speed,
+\begin{equation}
+    \Bar{v^2} = \frac{\int f(v)v^2 d^3v}{\int f(v)v d^3v}
+\end{equation}
+
+We can first calculate the numerator using the same substitution as before,
+\begin{align*}
+    \frac{\int f(v)v^2 d^3v} = 4\pi\int_0^\infty v^4 e^{v^2/2\sigma^2}dv 
+    &= 4\pi\int_0^\infty (\sqrt{2}\sigma u)^4 e^{u^2}\sqrt{2}\sigma du\\
+    &= 16 \sqrt{2}\pi\sigma^5 \frac{1}{2}\Gamma(\frac{5}{2}) = 6\pi \sqrt{2\pi} \sigma^5
+\end{align*}
+
+Then, since it uses the same normalization factor, the mean square speed is
+\begin{align*}
+    \Bar{v^2} = \frac{6\pi \sqrt{2\pi} \sigma^5}{2\sqrt{2}\sigma^3 \pi \sqrt{\pi}} = 3\sigma^2
+\end{align*}
+
+%==============================================================================
+\subsection{}
+% the mean-square of one component of velocity is $\Bar{v^2_x}=\sigma^2$
+The Maxwellian distribution of the component in the x-direction is given by
+\begin{equation}
+    f(v_x)=e^{v_x^2/2\sigma^2}
+\end{equation}
+So the mean square is
+\begin{equation}
+    \Bar{v^2_x} 
+    = \frac{\int v_x^2 e^{v_x^2/2\sigma^2} dv}{\int e^{v_x^2/2\sigma^2} dv} 
+    = \frac{\int (\sqrt{2}\sigma u)^2 e^{-u^2}\sqrt{2}\sigma du}{\int e^{-u^2} \sqrt{2}\sigma du}
+    = \frac{2\sigma^3\sqrt{2}\frac{1}{2}\Gamma(\frac{3}{2})}{\sqrt{2}\sigma\frac{1}{2}\Gamma(\frac{1}{2})}
+    =\frac{\sigma^3\sqrt{2}\frac{1}{2}\sqrt{\pi}}{\sqrt{2}\sigma \frac{1}{2}\sqrt{\pi}}
+    = \sigma^2
+\end{equation}
+
+%==============================================================================
 \subsection{}
 the mean-square relative speed of any two particles is $\Bar{v^2_{rel}}=6\sigma^2$
 
+
+
+%==============================================================================
 \subsection{}
 the fraction of particles with $v^2>4\Bar{v^2}$ is 0.00738
